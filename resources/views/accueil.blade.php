@@ -9,7 +9,19 @@
 <body class="flex justify-center bg-cover bg-center bg-no-repeat min-h-screen"
       style="background-image: url('{{ asset('images/acceuil.png') }}');">
 
-    <section class="w-full max-w-3xl p-4">
+    <!-- Formes décoratives -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <!-- Cercle orange -->
+        <div class="absolute top-20 -right-20 w-96 h-96 bg-orange-500 rounded-full mix-blend-multiply blur-3xl opacity-20"></div>
+
+        <!-- Cercle bleu -->
+        <div class="absolute -bottom-32 -left-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply blur-3xl opacity-10"></div>
+
+        <!-- Forme organique -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-yellow-400 rounded-blob blur-2xl opacity-10"></div>
+    </div>
+
+    <section class="w-full max-w-3xl p-4 relative z-10">
         <!-- Header -->
         <header class="flex justify-between items-center p-4">
             <div class="logo">
@@ -41,108 +53,117 @@
             <input type="text" placeholder="🔍 Recherche Menu" class="w-4/5 p-3 border-2 border-gray-300 rounded-full text-lg">
         </div>
 
-        <!-- Liste des plats -->
-        <div class="mt-6 space-y-4">
-            <!-- Item 1 -->
-            <div class="bg-white flex items-center rounded-lg shadow-md p-4">
-                <img src="{{ asset('images/Chawarma.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
-                <div class="ml-4 flex-1">
-                    <h3 class="text-lg font-bold">Shawarma viande</h3>
-                    <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
-                    <!-- Système d'étoiles -->
-                    <div class="flex space-x-1 my-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                    </div>
-                    <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
-                </div>
-                <!-- Bouton favoris -->
-                <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                    </svg>
-                </button>
-            </div>
+        <!-- Ajoutez ceci après la barre de recherche -->
+        <div class="relative mt-6">
+            <!-- Forme en arrière-plan -->
+            <div class="absolute -top-10 right-0 w-72 h-72 bg-orange-500 rounded-full blur-3xl opacity-20"></div>
 
-            <!-- Item 2 (Copie) -->
-            <div class="bg-white flex items-center rounded-lg shadow-md p-4">
-                <img src="{{ asset('images/main dishes.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
-                <div class="ml-4 flex-1">
-                    <h3 class="text-lg font-bold">Main Dishes</h3>
-                    <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
-                    <!-- Système d'étoiles -->
-                    <div class="flex space-x-1 my-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
+            <!-- Votre contenu existant -->
+            <div class="relative z-10">
+                <!-- Liste des plats -->
+                <div class="space-y-4">
+                    <!-- Item 1 -->
+                    <div class="bg-white flex items-center rounded-lg shadow-md p-4">
+                        <img src="{{ asset('images/Chawarma.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-lg font-bold">Shawarma viande</h3>
+                            <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
+                            <!-- Système d'étoiles -->
+                            <div class="flex space-x-1 my-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
+                        </div>
+                        <!-- Bouton favoris -->
+                        <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        </button>
                     </div>
-                    <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
-                </div>
-                <!-- Bouton favoris -->
-                <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                    </svg>
-                </button>
-            </div>
 
-            <!-- Item 3 (Copie) -->
-            <div class="bg-white flex items-center rounded-lg shadow-md p-4">
-                <img src="{{ asset('images/bissap.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
-                <div class="ml-4 flex-1">
-                    <h3 class="text-lg font-bold">Bissap</h3>
-                    <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
-                    <!-- Système d'étoiles -->
-                    <div class="flex space-x-1 my-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
+                    <!-- Item 2 (Copie) -->
+                    <div class="bg-white flex items-center rounded-lg shadow-md p-4">
+                        <img src="{{ asset('images/main dishes.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-lg font-bold">Main Dishes</h3>
+                            <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
+                            <!-- Système d'étoiles -->
+                            <div class="flex space-x-1 my-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
+                        </div>
+                        <!-- Bouton favoris -->
+                        <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        </button>
                     </div>
-                    <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
+
+                    <!-- Item 3 (Copie) -->
+                    <div class="bg-white flex items-center rounded-lg shadow-md p-4">
+                        <img src="{{ asset('images/bissap.jpg') }}" alt="chawarma" class="w-24 h-24 rounded-lg border-4 border-orange-500 object-cover">
+                        <div class="ml-4 flex-1">
+                            <h3 class="text-lg font-bold">Bissap</h3>
+                            <h4 class="text-sm text-gray-600">Prix : 1500fcfa</h4>
+                            <!-- Système d'étoiles -->
+                            <div class="flex space-x-1 my-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-yellow-400">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-5 h-5 text-gray-300">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                            </div>
+                            <button class="bg-orange-500 text-white px-3 py-1 rounded mt-2 hover:bg-orange-600">Ajouter</button>
+                        </div>
+                        <!-- Bouton favoris -->
+                        <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-                <!-- Bouton favoris -->
-                <button class="favorite-button p-2 rounded-full hover:bg-gray-100 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-400 hover:text-red-500 transition-colors">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                    </svg>
-                </button>
             </div>
         </div>
     </section>

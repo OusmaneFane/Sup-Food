@@ -18,7 +18,7 @@
 
     <!-- Contenu principal -->
     <div class="flex flex-col justify-center items-center h-full px-6">
-      <div class="w-full max-w-md text-center p-6 rounded-lg">
+      <div class="w-full max-w-md text-center p-6 rounded-lg -translate-y-20">
         <!-- Titre -->
         <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
           BIENVENUE !
