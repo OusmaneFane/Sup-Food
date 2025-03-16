@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +14,7 @@
         }
 
         .home {
-            background-image: url('{{ asset('images/Vue1.png') }}');
+            background-image: url('{{ asset('images/landingback.png') }}');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -30,6 +31,24 @@
             margin-bottom: 20px;
         }
 
+        @media (min-width: 640px) {
+            .fleche img {
+                width: 8rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .fleche img {
+                width: 12rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .fleche img {
+                width: 16rem;
+            }
+        }
+
         .text sup {
             font-style: bold;
         }
@@ -39,24 +58,26 @@
         }
 
         .fleche img {
-            width: 50px;
+            /* width: 50px; */
+            width: 4rem
             margin-top: 30px;
             animation: bounce 2s;
             cursor: pointer;
+
         }
     </style>
 </head>
 <body>
     <section class="home">
         <div class="logo">
-            <img src="{{ asset('images/logo.jpg') }}" alt="Logo Sup'Food">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo Sup'Food">
         </div>
         <div class="text">
             <p>Moins d'attente,<br> plus de plaisir <strong class="sup">SUP'FOOD</strong> a <br>votre service</p>
         </div>
         <div class="fleche">
             <a href="{{ url('/welcome') }}">
-                <img src="{{ asset('images/Suivant.png') }}" alt="Flèche suivante">
+                <img src="{{ asset('images/suivant.png') }}" alt="Flèche suivante">
             </a>
         </div>
     </section>

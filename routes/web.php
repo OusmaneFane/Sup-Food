@@ -62,3 +62,11 @@ Route::get('/mot-de-passe-change', function () {
     ]);
 });
 
+// Route pour la page d'accueil après connexion
+Route::get('/accueil', function () {
+    return view('accueil', [
+        'titre' => "Sup'Food - Accueil",
+        'user' => "John" // À remplacer par le nom de l'utilisateur connecté
+    ]);
+});
+

@@ -15,7 +15,7 @@
     >
       <!-- Bouton Sortie -->
       <button id="backButton" class="absolute top-4 right-4">
-        <img src="{{ asset('images/close.png') }}" alt="sortie" class="w-8 sm:w-10" />
+        <img src="{{ asset('images/exit.png') }}" alt="sortie" class="w-8 sm:w-10" />
       </button>
 
       <!-- Titre -->
