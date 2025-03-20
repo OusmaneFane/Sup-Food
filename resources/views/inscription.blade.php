@@ -35,7 +35,6 @@
           type="text"
           name="name"
           placeholder="Nom"
-          value={{old("name","Supmanagement")}}
           required
           class="w-full h-14 sm:h-16 rounded-2xl pl-4 text-lg border  focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -46,7 +45,6 @@
           type="number"
           name="matricule"
           placeholder="Matricule"
-          value={{old("matricule","0000000")}}
           required
           class="w-full h-14 sm:h-16 rounded-2xl pl-4 text-lg border border-gray-300 mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -57,7 +55,6 @@
           type="email"
           name="email"
           placeholder="exemple@supmanagement.ml"
-          value={{old("email","resto@supmanagement.ml")}}
           required
           class="w-full h-14 sm:h-16 rounded-2xl pl-4 text-lg border border-gray-300 mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
@@ -68,7 +65,6 @@
           type="password"
           name="password"
           placeholder="Mot de passe"
-          value={{old("password","test1@tset")}}
           required
           class="w-full h-14 sm:h-16 rounded-2xl pl-4 text-lg border border-gray-300 mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -80,9 +76,6 @@
           name="password_confirmation"
           placeholder="Confirmer mot de passe"
           required
-
-          value={{old('password_confirmation',"test1@tset")}}
-
           class="w-full h-14 sm:h-16 rounded-2xl pl-4 text-lg border border-gray-300 mt-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
           @error("password_confirmation")
