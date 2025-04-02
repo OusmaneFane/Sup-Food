@@ -177,13 +177,15 @@
     <audio id="successSound" src="/sounds/validate.mp3" preload="auto"></audio>
 
     <script>
-        Echo.private('user.commands.{{ Auth::id() }}')
+        @auth
+        Echo.private('user.commands.{{ auth()->id() }}')
             .listen('CommandValidated', (e) => {
                 console.log('Commande validée !', e);
                 alert(e.message); // Ou notification UI
                 document.getElementById('successSound').play();
                 location.reload(); // Recharge les commandes
             });
+        @endauth
     </script>
 
 

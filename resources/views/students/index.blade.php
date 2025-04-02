@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SUP'FOOD - Accueil</title>
+    @php use Illuminate\Support\Str; @endphp
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <script>
