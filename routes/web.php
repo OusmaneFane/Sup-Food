@@ -1,13 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CommandesController;
+use App\Http\Controllers\PanierController;
+use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\StatistiquesController;
+use App\Http\Controllers\Admin\ReportsController;
 
-// Page d'accueil (landing)
-Route::get('/', function () {
-    return view('landing', [
-        'titre' => "Sup'Food - Accueil"
-    ]);
-});
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Page welcome
 Route::get('/welcome', function () {
@@ -63,10 +68,45 @@ Route::get('/mot-de-passe-change', function () {
 });
 
 // Route pour la page d'accueil après connexion
-Route::get('/accueil', function () {
-    return view('accueil', [
-        'titre' => "Sup'Food - Accueil",
-        'user' => "Seydou" // À remplacer par le nom de l'utilisateur connecté
-    ]);
+Route::get('/accueil', [HomeController::class, 'index'])->name('accueil');
+
+Route::get('/commandes', [CommandesController::class, 'index'])->name('commandes.liste');
+Route::get('/panier', [PanierController::class, 'index']);
+
+Route::get('/dashboard', [AdminsController::class, 'index'])->name('admin.dashboard');
+
+
+// CRUD utilisateurs (sans middleware pour l’instant)
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::prefix('admin')->group(function () {
+    Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+    Route::resource('products', App\Http\Controllers\Admin\ProductController::class);
 });
+Route::get('/confirm-commande', [CommandesController::class, 'showCommande'])->name('commande');
+Route::post('/commander', [CommandesController::class, 'store'])->name('commander.store');
+
+// routes/web.php
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/commandes', [CommandesController::class, 'admin_index'])->name('admin.commands.index');
+    Route::post('/admin/commandes/{id}/valider', [CommandesController::class, 'valider'])->name('admin.commands.valider');
+    Route::post('/admin/commandes/{id}/annuler', [CommandesController::class, 'annuler'])->name('admin.commands.annuler');
+});
+
+Route::get('/admin/stats', [StatistiquesController::class, 'index'])
+    ->name('admin.statistiques')
+    ->middleware('auth');
+
+Route::prefix('admin')->group(function () {
+    Route::get('/rapports', [ReportsController::class, 'index'])->name('reports.index');
+// ✅ Routes de téléchargement journalier et mensuel
+    Route::get('/reports/download/{type}', [ReportsController::class, 'download'])->name('reports.download');
+    // ✅ Optionnel : route d’export spécifique avec une date
+    Route::get('/reports/export/{date}/{format}', [ReportsController::class, 'export'])->name('admin.reports.export');});
+
 
