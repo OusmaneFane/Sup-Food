@@ -3,7 +3,7 @@
 <div class="flex items-center gap-2">
 
     {{-- 🔎 Bouton consulter --}}
-    <a href="{{ route('admin.commands.show', $command->id) }}"
+    <a href="{{ route('admin.payments.receipt', $command->id) }}"
         class="text-blue-500 hover:text-blue-700 flex items-center gap-1 text-sm" title="Voir la commande">
         👁️
     </a>
