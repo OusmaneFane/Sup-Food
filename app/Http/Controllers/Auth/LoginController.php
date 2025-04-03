@@ -30,9 +30,9 @@ public function login(Request $request)
             case 'superadmin':
                 return redirect()->intended('/dashboard');
             case 'admin':
-                return redirect()->intended('/dashboard/admin');
+                return redirect()->intended('/dashboard');
             case 'gestionnaire':
-                return redirect()->intended('/dashboard/gestionnaire');
+                return redirect()->intended('/dashboard');
             case 'etudiant':
                 return redirect()->intended('/accueil');
             default:

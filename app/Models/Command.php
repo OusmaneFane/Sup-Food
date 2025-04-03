@@ -23,4 +23,9 @@ class Command extends Model
 {
     return $this->hasMany(CommandDetails::class); // ou la relation intermédiaire
 }
+    public function payment()
+{
+    return $this->hasOne(Payment::class);
+}
+
 }

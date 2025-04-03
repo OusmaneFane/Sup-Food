@@ -22,10 +22,10 @@
         <input type="hidden" name="cart_json" id="cartJsonInput">
         <input type="hidden" name="total_items" id="totalItemsInput">
         <input type="hidden" name="total_price" id="totalPriceInput">
-
-        <!-- Ajoutez ce champ caché pour l'user_id -->
-        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-
+        @auth
+            <!-- Ajoutez ce champ caché pour l'user_id -->
+            <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+        @endauth
         <!-- Adresse -->
         <div class="bg-white m-4 p-4 rounded-2xl shadow space-y-2">
             <h2 class="font-semibold text-sm">Adresse de Livraison</h2>
@@ -110,7 +110,7 @@
                         const lon = position.coords.longitude.toFixed(5);
                         document.getElementById('deliveryAddress').value = `Latitude: ${lat}, Longitude: ${lon}`;
                     },
-                    () => alert("Impossible de vous localiser.")
+                    () => alert("Cette fonctionnalité n'est pas encore disponible")
                 );
             } else {
                 alert("La géolocalisation n'est pas prise en charge.");

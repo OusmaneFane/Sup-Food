@@ -66,17 +66,21 @@ class CommandesController extends Controller
 }
    public function admin_index(Request $request)
 {
-    $status = $request->input('status');
-    
-    $commands = Command::with(['user', 'details.product'])
-        ->when($status, function($query) use ($status) {
-            return $query->where('status', $status);
+    $status = $request->status;
+    $search = $request->search;
+
+    $commands = Command::with(['user', 'details.product', 'payment'])
+        ->when($status, fn($q) => $q->where('status', $status))
+        ->when($search, function ($q) use ($search) {
+            $q->whereHas('user', fn($query) => $query->where('name', 'like', "%$search%"))
+              ->orWhere('delivery_address', 'like', "%$search%");
         })
-        ->orderBy('created_at', 'desc')
-        ->get();
+        ->latest()
+        ->paginate(10);
 
     return view('admins.commands.index', compact('commands'));
 }
+
      public function valider($id)
     {
         $command = Command::findOrFail($id);

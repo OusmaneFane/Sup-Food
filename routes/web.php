@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\StatistiquesController;
 use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\PaymentController;
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -108,5 +109,17 @@ Route::prefix('admin')->group(function () {
     Route::get('/reports/download/{type}', [ReportsController::class, 'download'])->name('reports.download');
     // ✅ Optionnel : route d’export spécifique avec une date
     Route::get('/reports/export/{date}/{format}', [ReportsController::class, 'export'])->name('admin.reports.export');});
+
+    // routes/web.php
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/commandes/{command}/paiement', [PaymentController::class, 'create'])->name('admin.payments.create');
+    Route::post('/commandes/{command}/paiement', [PaymentController::class, 'store'])->name('admin.payments.store');
+    Route::get('/admin/payments/{payment}/receipt', [PaymentController::class, 'receipt'])->name('admin.payments.receipt');
+    Route::get('/paiements', [PaymentController::class, 'index'])->name('admin.payments.index');
+    Route::get('/payments/export/{format}', [PaymentController::class, 'export'])->name('admin.payments.export');
+
+});
+
 
 
