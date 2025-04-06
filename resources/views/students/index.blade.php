@@ -48,12 +48,23 @@
     <div class="bg-[#e6f6ff] px-4 pt-6 pb-2 rounded-b-3xl relative">
         <div class="flex justify-between items-center mb-4">
             <button id="openMenu" class="text-xl">☰</button>
+
             <img src="/images/logo.png" alt="logo" class="h-6" />
-            <button class="text-2xl">⤴️</button>
+            <button id="openMenuProfile">
+                <!-- Photo de profil avec déclencheur du menu -->
+                <svg class="h-8 w-8 rounded-full border-2 border-orange-500 shadow-md object-cover cursor-pointer text-sky-600"
+                    fill="currentColor" viewBox="0 0 448 512" aria-hidden="true">
+                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm89.6
+           32h-11.8c-22.3 10.3-46.9 16-73.8 16s-51.5-5.7-73.8-16h-11.8A134.4
+           134.4 0 0 0 8 422.4v25.6A64 64 0 0 0 72 512h304a64 64 0 0 0
+           64-64v-25.6A134.4 134.4 0 0 0 313.6 288z" />
+                </svg> </button>
         </div>
-        <input type="text" placeholder="Recherchez ici..."
+
+        <input id="searchInput" type="text" placeholder="Recherchez ici..."
             class="w-full p-3 rounded-full bg-white text-sm focus:outline-none" />
     </div>
+
 
     <!-- FILTRES -->
     <div id="categoryButtons" class="flex space-x-2 overflow-x-auto px-4 py-3 text-sm font-medium">
@@ -174,6 +185,189 @@
             </div>
         </div>
     </div>
+    <!-- Remplacez la section menuProfil par ce code -->
+    <div id="menuProfil"
+        class="fixed top-0 left-0 h-full w-full bg-white z-50 translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+        <!-- Header avec bouton retour -->
+        <div class="bg-[#e6f6ff] p-4 rounded-b-3xl flex items-center sticky top-0 z-10">
+            <button id="closeMenuProfil" class="text-xl mr-2">←</button>
+            <h2 class="text-lg font-bold">Mon Profil</h2>
+        </div>
+
+        <!-- Section profil -->
+        <div class="p-4">
+            <!-- Carte profil -->
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-6 shadow-sm mb-6 text-center">
+                <div class="flex justify-center mb-4">
+                    <div class="relative">
+                        <img src="{{ auth()->user()->photo ?? '/images/logo.png' }}" alt="Photo de profil"
+                            class="h-24 w-24 rounded-full border-4 border-white shadow-md object-cover mx-auto">
+                        <button
+                            class="absolute bottom-0 right-0 bg-blue-500 text-white rounded-full p-2 shadow-md hover:bg-blue-600 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800">{{ $studentInfos['firstname'] }}
+                    {{ $studentInfos['lastname'] }}</h3>
+                <p class="text-blue-500 text-sm">{{ auth()->user()->email }}</p>
+
+                <div class="flex justify-center space-x-4 mt-4">
+                    <div class="text-center">
+                        <div class="text-gray-500 text-xs">Commandes</div>
+                        <div class="font-bold text-gray-800">{{ $userOrdersCount }}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-500 text-xs">Favoris</div>
+                        <div class="font-bold text-gray-800">5</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-gray-500 text-xs">Depuis</div>
+                        <div class="font-bold text-gray-800">{{ auth()->user()->created_at->format('m/Y') }}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu options -->
+            <div class="space-y-3">
+                <!-- Section Informations -->
+                <div class="bg-white rounded-xl shadow-sm p-4">
+                    <h4 class="font-medium text-gray-500 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-blue-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Informations personnelles
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="text-gray-600">Matricule</span>
+                            <span class="font-medium">{{ $studentInfos['username'] }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                            <span class="text-gray-600">Email</span>
+                            <span class="font-medium">{{ auth()->user()->email }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-600">Téléphone</span>
+                            <span class="font-medium">{{ $studentInfos['phone'] }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-gray-600">Adresse</span>
+                            <span class="font-medium">{{ $studentInfos['address'] }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton Déconnexion -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="w-full bg-red-50 text-red-500 font-medium rounded-xl py-3 mt-6 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Se déconnecter
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ---- Sélection des éléments ----
+            const categoryButtons = document.querySelectorAll('#categoryButtons button');
+            const products = document.querySelectorAll('#productList .product');
+            const searchInput = document.getElementById('searchInput');
+
+            let selectedCategory = 'all'; // catégorie par défaut
+
+            // ---- Fonction de filtrage combiné (catégorie + recherche) ----
+            function filterProducts() {
+                const query = searchInput.value.toLowerCase().trim();
+
+                products.forEach(product => {
+                    const productCategory = product.dataset.category;
+                    const productName = product.querySelector('h3').textContent.toLowerCase();
+
+                    // Vérifie si la catégorie correspond OU si 'all' est sélectionné
+                    const matchCategory = (selectedCategory === 'all' || productCategory ===
+                        selectedCategory);
+
+                    // Vérifie si le nom du produit contient le texte recherché
+                    const matchSearch = (query === '' || productName.includes(query));
+
+                    // Affiche ou masque selon les deux conditions
+                    if (matchCategory && matchSearch) {
+                        product.classList.remove('hidden');
+                    } else {
+                        product.classList.add('hidden');
+                    }
+                });
+            }
+
+            // ---- Gestion du clic sur les boutons de catégorie ----
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Mise à jour du style actif
+                    categoryButtons.forEach(btn => {
+                        btn.classList.remove('bg-orange-500', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    button.classList.remove('bg-gray-200', 'text-gray-700');
+                    button.classList.add('bg-orange-500', 'text-white');
+
+                    // Met à jour la catégorie sélectionnée
+                    selectedCategory = button.dataset.category;
+
+                    // Filtre les produits
+                    filterProducts();
+                });
+            });
+
+            // ---- Recherche : écoute de la saisie ----
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    filterProducts();
+                });
+            }
+
+            // Menu latéral
+            const openMenu = document.getElementById("openMenu");
+            const closeMenu = document.getElementById("closeMenu");
+            const menu = document.getElementById("menu");
+
+            openMenu.addEventListener("click", () => menu.classList.remove("translate-x-full"));
+            closeMenu.addEventListener("click", () => menu.classList.add("translate-x-full"));
+        });
+    </script>
+
+    <script>
+        // Gestion du menu profil
+        const openMenuProfile = document.getElementById("openMenuProfile");
+        const closeMenuProfil = document.getElementById("closeMenuProfil");
+        const menuProfil = document.getElementById("menuProfil");
+
+        openMenuProfile.addEventListener("click", () => {
+            menuProfil.classList.remove("translate-x-full");
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenuProfil.addEventListener("click", () => {
+            menuProfil.classList.add("translate-x-full");
+            document.body.style.overflow = 'auto';
+        });
+    </script>
 
     <script>
         // Menu
@@ -301,6 +495,17 @@
             updateCartCount();
         });
     </script>
+
+    <script>
+        // Menu
+        const openMenuProfile = document.getElementById("openMenuProfile");
+        const closeMenuProfil = document.getElementById("closeMenuProfil");
+        const menuProfil = document.getElementById("menuProfil");
+
+        openMenuProfile.addEventListener("click", () => menu.classList.remove("translate-x-full"));
+        closeMenu.addEventListener("click", () => menu.classList.add("translate-x-full"));
+    </script>
+
 </body>
 
 </html>

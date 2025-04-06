@@ -7,7 +7,7 @@ use App\Models\Command;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Events\CommandeValidee;
-
+ use Carbon\Carbon;
 
 class CommandesController extends Controller
 {
@@ -64,22 +64,46 @@ class CommandesController extends Controller
 
     return redirect()->route('commandes.liste')->with('success', 'Commandes éffectué');
 }
-   public function admin_index(Request $request)
+
+public function admin_index(Request $request)
 {
-    $status = $request->status;
-    $search = $request->search;
+    $status     = $request->get('status');
+    $search     = $request->get('search');
+    $startDate  = $request->get('start_date');
+    $endDate    = $request->get('end_date');
+
+    // Si aucun filtre de date n’est spécifié, on met par défaut la date du jour
+    if (!$startDate && !$endDate) {
+        $startDate = Carbon::today()->format('Y-m-d');
+        $endDate   = Carbon::today()->format('Y-m-d');
+    }
 
     $commands = Command::with(['user', 'details.product', 'payment'])
         ->when($status, fn($q) => $q->where('status', $status))
         ->when($search, function ($q) use ($search) {
-            $q->whereHas('user', fn($query) => $query->where('name', 'like', "%$search%"))
-              ->orWhere('delivery_address', 'like', "%$search%");
+            $q->whereHas('user', fn($query) =>
+                $query->where('name', 'like', "%{$search}%")
+            )
+            ->orWhere('delivery_address', 'like', "%{$search}%");
         })
+
+        // Filtre par date
+        ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+        ->when($endDate,   fn($q) => $q->whereDate('created_at', '<=', $endDate))
+
         ->latest()
         ->paginate(10);
 
-    return view('admins.commands.index', compact('commands'));
+    return view('admins.commands.index', [
+        'commands'  => $commands,
+        'startDate' => $startDate,
+        'endDate'   => $endDate,
+        'status'    => $status,
+        'search'    => $search
+    ]);
 }
+
+
 
      public function valider($id)
     {
@@ -99,6 +123,42 @@ class CommandesController extends Controller
 
         return redirect()->back()->with('success', 'Commande annulée.');
     }
+    
+    public function fetchLive()
+{
+    $commands = \App\Models\Command::with('details.product')
+        ->where('user_id', Auth::id())
+        ->latest()
+        ->get();
+
+    return response()->json([
+        'html' => view('partials.commands', compact('commands'))->render()
+    ]);
+}
+public function admin_index_partial(Request $request)
+{
+    $status = $request->status;
+    $search = $request->search;
+    $date   = $request->date;  // si tu veux filtrer par date
+
+    $query = Command::with(['user', 'details.product', 'payment'])
+        ->when($status, fn($q) => $q->where('status', $status))
+        ->when($search, function ($q) use ($search) {
+            $q->whereHas('user', fn($query) => $query->where('name', 'like', "%$search%"))
+              ->orWhere('delivery_address', 'like', "%$search%");
+        });
+
+    // Exemple de filtre par date du jour
+    // "date" peut être '2023-04-05', ou 'today', etc.
+    if ($date === 'today') {
+        $query->whereDate('created_at', '=', now()->toDateString());
+    }
+
+    $commands = $query->latest()->paginate(10);
+
+    // On renvoie seulement la partial
+    return view('admins.commands.list', compact('commands'));
+}
 
 
 

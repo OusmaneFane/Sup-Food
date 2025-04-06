@@ -1,5 +1,8 @@
 @extends('layouts.main')
-@php use Illuminate\Support\Str; @endphp
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @section('content')
     <div class="min-h-screen bg-gray-50 p-6">
         <div class="max-w-6xl mx-auto">
@@ -11,13 +14,26 @@
                 <p class="text-sm text-gray-500">Mis à jour à {{ now()->format('H:i') }}</p>
             </div>
 
-            <!-- Filtres -->
+            <!-- Filtres Rapides (status) -->
             <div class="flex gap-2 flex-wrap mb-6">
                 <x-admin.command-filter label="Toutes" route="admin.commands.index" :active="request('status') === null" />
                 <x-admin.command-filter label="En attente" route="admin.commands.index" :params="['status' => 'en_attente']" :active="request('status') === 'en_attente'" />
                 <x-admin.command-filter label="Validées" route="admin.commands.index" :params="['status' => 'validée']" :active="request('status') === 'validée'" />
                 <x-admin.command-filter label="Annulées" route="admin.commands.index" :params="['status' => 'annulée']" :active="request('status') === 'annulée'" />
+                <button onclick="document.getElementById('filterModal').classList.remove('hidden')"
+                    class="ml-auto flex items-center gap-2 bg-orange-500 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    Filtres
+                </button>
             </div>
+
+
+
+            <!-- Barre de recherche simple -->
             <form method="GET" class="mb-6 flex gap-2">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="🔍 Rechercher..."
                     class="px-4 py-2 border border-gray-200 rounded-lg shadow-sm w-full md:w-64 focus:outline-none focus:ring focus:border-blue-300">
@@ -28,6 +44,7 @@
                     Rechercher
                 </button>
             </form>
+
 
             <!-- Liste des commandes -->
             <div class="grid gap-4">
@@ -49,7 +66,6 @@
                                     </p>
                                 </div>
                             </div>
-
                             <div class="flex items-center gap-3 flex-wrap">
                                 @if ($command->status === 'en_attente')
                                     <x-admin.command-action :command="$command" />
@@ -67,11 +83,11 @@
 
                                 <span
                                     class="px-3 py-1 rounded-full text-xs font-medium
-                                {{ $command->status === 'validée'
-                                    ? 'bg-green-100 text-green-700'
-                                    : ($command->status === 'annulée'
-                                        ? 'bg-red-100 text-red-700'
-                                        : 'bg-yellow-100 text-yellow-800') }}">
+                                    {{ $command->status === 'validée'
+                                        ? 'bg-green-100 text-green-700'
+                                        : ($command->status === 'annulée'
+                                            ? 'bg-red-100 text-red-700'
+                                            : 'bg-yellow-100 text-yellow-800') }}">
                                     {{ ucfirst($command->status) }}
                                 </span>
                             </div>
@@ -113,11 +129,82 @@
                         <p class="text-gray-500">Aucune commande trouvée.</p>
                     </div>
                 @endforelse
+
                 <div class="mt-6">
                     {{ $commands->withQueryString()->links() }}
                 </div>
-
             </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Filtre Avancé -->
+    <div id="filterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
+            <!-- Bouton fermeture -->
+            <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                onclick="document.getElementById('filterModal').classList.add('hidden')">
+                ✕
+            </button>
+
+            <h2 class="text-lg font-bold mb-4">Filtrer par Date</h2>
+
+            <form method="GET" action="{{ route('admin.commands.index') }}" class="space-y-4">
+                <!-- On garde la search si on veut la conserver -->
+                @if (request('search'))
+                    <input type="hidden" name="search" value="{{ request('search') }}">
+                @endif
+                <!-- On garde le status actuel si l'utilisateur l'a déjà choisi via un bouton -->
+                @if (request('status'))
+                    <input type="hidden" name="status" value="{{ request('status') }}">
+                @endif
+
+                <!-- Filtrer par date de début -->
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700">Date de début</label>
+                    <input type="date" id="start_date" name="start_date"
+                        value="{{ old('start_date', $startDate ?? '') }}"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+                </div>
+
+                <!-- Filtrer par date de fin -->
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700">Date de fin</label>
+                    <input type="date" id="end_date" name="end_date" value="{{ old('end_date', $endDate ?? '') }}"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+                </div>
+
+                <!-- (Optionnel) Refiltrer le status directement ici -->
+                <div>
+                    <label for="status_modal" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status_modal" name="status"
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <option value="">-- Tous --</option>
+                        <option value="en_attente"
+                            {{ request('status') === 'en_attente' || (isset($status) && $status === 'en_attente') ? 'selected' : '' }}>
+                            En attente
+                        </option>
+                        <option value="validée"
+                            {{ request('status') === 'validée' || (isset($status) && $status === 'validée') ? 'selected' : '' }}>
+                            Validées
+                        </option>
+                        <option value="annulée"
+                            {{ request('status') === 'annulée' || (isset($status) && $status === 'annulée') ? 'selected' : '' }}>
+                            Annulées
+                        </option>
+                    </select>
+                </div>
+
+                <div class="flex justify-end gap-2 mt-4">
+                    <button type="button" class="bg-gray-300 px-4 py-2 rounded"
+                        onclick="document.getElementById('filterModal').classList.add('hidden')">
+                        Annuler
+                    </button>
+                    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                        Appliquer
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

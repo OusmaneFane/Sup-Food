@@ -121,5 +121,18 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/etudiant/commandes/live', [CommandesController::class, 'fetchLive'])->middleware('auth');
+
+Route::get('/api/check-commande-status', function () {
+    $commande = \App\Models\Command::where('status', 'validée')->latest()->first();
+
+    return response()->json([
+        'status' => $commande ? $commande->updated_at->toDateTimeString() : null
+    ]);
+});
+
+Route::get('/admin/commands/partial', [CommandesController::class, 'admin_index_partial'])
+     ->name('admin.commands.index.partial');
+
 
 

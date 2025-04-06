@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -128,7 +129,7 @@
             transition: all 0.3s ease;
         }
 
-        .input-group input:focus + i {
+        .input-group input:focus+i {
             color: var(--secondary-color);
             transform: translateY(-50%) scale(1.1);
         }
@@ -335,59 +336,62 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
-        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Healthy food" class="food-image top-left">
-        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Delicious pizza" class="food-image bottom-right">
-        
+        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+            alt="Healthy food" class="food-image top-left">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"
+            alt="Delicious pizza" class="food-image bottom-right">
+
         <div class="logo">
             <img src="/images/logo.png" alt="Sup'Food Logo">
             <h1>Sup'Food</h1>
             <p>Gestion des commandes - Accès personnel</p>
         </div>
-        
+
         <form method="POST" action="/login">
-    @csrf
+            @csrf
 
-    {{-- Message d'erreur global --}}
-    @if($errors->any())
-        <div style="color: var(--error-color); margin-bottom: 1rem; text-align: center;">
-            {{ $errors->first() }}
-        </div>
-    @endif
+            {{-- Message d'erreur global --}}
+            @if ($errors->any())
+                <div style="color: var(--error-color); margin-bottom: 1rem; text-align: center;">
+                    {{ $errors->first() }}
+                </div>
+            @endif
 
-    <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
-    </div>
-    
-    <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="password" placeholder="Mot de passe" required>
-    </div>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" name="name" placeholder="Matricule" required value="{{ old('name') }}">
+            </div>
 
-    <div class="remember-forgot">
-        <div class="remember-me">
-            <input type="checkbox" name="remember" id="remember">
-            <label for="remember">Se souvenir de moi</label>
-        </div>
-        <div class="forgot-password">
-            <a href="#">Mot de passe oublié ?</a>
-        </div>
-    </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Mot de passe" required>
+            </div>
 
-    <button type="submit" class="login-btn">Se connecter</button>
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" name="remember" id="remember">
+                    <label for="remember">Se souvenir de moi</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Mot de passe oublié ?</a>
+                </div>
+            </div>
 
-    <div class="social-login">
-        <a href="#" class="social-btn"><i class="fab fa-google"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social-btn"><i class="fab fa-apple"></i></a>
-    </div>
+            <button type="submit" class="login-btn">Se connecter</button>
 
-    <div class="register-link">
-        <p>Nouveau sur Sup'Food ? <a href="#">Créer un compte</a></p>
-    </div>
-</form>
+            <div class="social-login">
+                <a href="#" class="social-btn"><i class="fab fa-google"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-apple"></i></a>
+            </div>
+
+            <div class="register-link">
+                <p>Nouveau sur Sup'Food ? <a href="#">Créer un compte</a></p>
+            </div>
+        </form>
 
     </div>
 
@@ -398,26 +402,29 @@
             const containerRect = container.getBoundingClientRect();
             const containerCenterX = containerRect.left + containerRect.width / 2;
             const containerCenterY = containerRect.top + containerRect.height / 2;
-            
+
             const mouseX = e.clientX;
             const mouseY = e.clientY;
-            
+
             const angleX = (mouseY - containerCenterY) / 20;
             const angleY = (containerCenterX - mouseX) / 20;
-            
+
             container.style.transform = `translateY(-5px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
-            
+
             const topLeftImg = document.querySelector('.food-image.top-left');
             const bottomRightImg = document.querySelector('.food-image.bottom-right');
-            
+
             if (topLeftImg) {
-                topLeftImg.style.transform = `rotate(-15deg) translate(${(mouseX - containerCenterX) / 50}px, ${(mouseY - containerCenterY) / 50}px)`;
+                topLeftImg.style.transform =
+                    `rotate(-15deg) translate(${(mouseX - containerCenterX) / 50}px, ${(mouseY - containerCenterY) / 50}px)`;
             }
-            
+
             if (bottomRightImg) {
-                bottomRightImg.style.transform = `rotate(15deg) translate(${(mouseX - containerCenterX) / 50}px, ${(mouseY - containerCenterY) / 50}px)`;
+                bottomRightImg.style.transform =
+                    `rotate(15deg) translate(${(mouseX - containerCenterX) / 50}px, ${(mouseY - containerCenterY) / 50}px)`;
             }
         });
     </script>
 </body>
+
 </html>
