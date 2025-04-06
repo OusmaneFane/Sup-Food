@@ -135,4 +135,6 @@ Route::get('/admin/commands/partial', [CommandesController::class, 'admin_index_
      ->name('admin.commands.index.partial');
 
 
+Route::patch('/admin/commands/{command}/recuperer', [AdminsController::class, 'marquerCommeRecuperee'])->name('admin.commands.recuperer');
+
 

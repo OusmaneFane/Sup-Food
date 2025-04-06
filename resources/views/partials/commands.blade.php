@@ -44,6 +44,11 @@
                     </span>
                 </div>
             </div>
+            @if ($command->recuperation && $command->recuperation->recuperee)
+                <span class="text-green-600 text-sm font-semibold">✅ Récupérée</span>
+            @else
+                <span class="text-yellow-500 text-sm font-semibold">⏳ En attente de récupération</span>
+            @endif
         </div>
     </div>
 @endforeach

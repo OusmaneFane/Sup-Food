@@ -27,5 +27,11 @@ class Command extends Model
 {
     return $this->hasOne(Payment::class);
 }
+    public function recuperation()
+{
+    return $this->hasOne(Recuperation::class);
+}
+
+
 
 }

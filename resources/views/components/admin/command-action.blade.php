@@ -5,7 +5,7 @@
     {{-- 🔎 Bouton consulter --}}
     <a href="{{ route('admin.payments.receipt', $command->id) }}"
         class="text-blue-500 hover:text-blue-700 flex items-center gap-1 text-sm" title="Voir la commande">
-        👁️
+        👁️ Voir
     </a>
 
     {{-- ✅ Si la commande est en attente, afficher valider/annuler --}}
@@ -13,14 +13,14 @@
         <form method="POST" action="{{ route('admin.commands.valider', $command->id) }}">
             @csrf
             <button type="submit" class="text-green-500 hover:text-green-700" title="Valider">
-                ✅
+                ✅ Valider
             </button>
         </form>
 
         <form method="POST" action="{{ route('admin.commands.annuler', $command->id) }}">
             @csrf
             <button type="submit" class="text-red-500 hover:text-red-700" title="Annuler">
-                ❌
+                ❌ Annuler
             </button>
         </form>
     @endif

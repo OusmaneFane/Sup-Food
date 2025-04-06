@@ -26,5 +26,17 @@ class AdminsController extends Controller
     ]);
 }
 
+    public function marquerCommeRecuperee(Command $command)
+{
+    $command->recuperation()->update([
+        'recuperee' => true,
+        'recuperee_at' => now()
+    ]);
+
+    return back()->with('success', 'Commande marquée comme récupérée');
+}
+
+
+
 
 }

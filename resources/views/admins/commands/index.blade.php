@@ -49,55 +49,76 @@
             <!-- Liste des commandes -->
             <div class="grid gap-4">
                 @forelse ($commands as $command)
-                    <div class="bg-white rounded-xl shadow border border-gray-100 p-5 space-y-4">
-                        <div class="flex justify-between items-start md:items-center flex-col md:flex-row gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="p-3 bg-blue-50 rounded-lg">
-                                    <svg class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24"
+                    <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-5">
+                        {{-- Informations principales --}}
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+                            {{-- Infos client --}}
+                            <div class="flex items-start gap-4">
+                                <div class="bg-blue-100 p-3 rounded-full">
+                                    <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24"
                                         stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                     </svg>
                                 </div>
-                                <div>
+                                <div class="space-y-1">
                                     <h2 class="text-lg font-semibold text-gray-800">{{ $command->user->name }}</h2>
-                                    <p class="text-sm text-gray-500">{{ Str::limit($command->delivery_address, 40) }}</p>
-                                    <p class="text-xs text-gray-400 mt-1">{{ $command->created_at->format('d/m/Y H:i') }}
-                                    </p>
+                                    <p class="text-sm text-gray-500">{{ Str::limit($command->delivery_address, 60) }}</p>
+                                    <p class="text-xs text-gray-400">{{ $command->created_at->format('d/m/Y à H:i') }}</p>
+
+                                    {{-- Récupération --}}
+                                    @if ($command->recuperation && $command->recuperation->recuperee)
+                                        <p class="text-green-600 text-sm font-semibold">✅ Commande récupérée</p>
+                                    @else
+                                        <p class="text-yellow-500 text-sm font-semibold">⏳ En attente de récupération</p>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 flex-wrap">
-                                @if ($command->status === 'en_attente')
-                                    <x-admin.command-action :command="$command" />
-                                @elseif ($command->status === 'validée' && !$command->payment)
-                                    <a href="{{ route('admin.payments.create', $command->id) }}"
-                                        class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm shadow">
-                                        💵 Effectuer le Paiement
-                                    </a>
-                                @elseif ($command->payment)
-                                    <a href="{{ route('admin.payments.receipt', $command->payment->id) }}"
-                                        class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm shadow">
-                                        👁 Voir Paiement
-                                    </a>
-                                @endif
 
+                            {{-- Actions et statut --}}
+                            <div class="flex flex-col md:items-end gap-3">
+                                <div class="flex flex-wrap gap-2">
+                                    @if ($command->status === 'en_attente')
+                                        <x-admin.command-action :command="$command" />
+                                    @elseif ($command->status === 'validée' && !$command->payment)
+                                        <a href="{{ route('admin.payments.create', $command->id) }}"
+                                            class="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-lg shadow inline-flex items-center gap-2">
+                                            💵 Paiement
+                                        </a>
+                                    @elseif ($command->payment)
+                                        <a href="{{ route('admin.payments.receipt', $command->payment->id) }}"
+                                            class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-4 py-2 rounded-lg shadow inline-flex items-center gap-2">
+                                            👁 Voir Paiement
+                                        </a>
+                                    @endif
+
+                                    @if ($command->recuperation && !$command->recuperation->recuperee)
+                                        <form method="POST" action="{{ route('admin.commands.recuperer', $command->id) }}">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg shadow">
+                                                ✅ Marquer comme récupérée
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+
+                                {{-- Badge Statut --}}
                                 <span
-                                    class="px-3 py-1 rounded-full text-xs font-medium
-                                    {{ $command->status === 'validée'
-                                        ? 'bg-green-100 text-green-700'
-                                        : ($command->status === 'annulée'
-                                            ? 'bg-red-100 text-red-700'
-                                            : 'bg-yellow-100 text-yellow-800') }}">
+                                    class="mt-2 px-3 py-1 rounded-full text-xs font-medium self-start md:self-auto
+                    {{ $command->status === 'validée' ? 'bg-green-100 text-green-700' : ($command->status === 'annulée' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-800') }}">
                                     {{ ucfirst($command->status) }}
                                 </span>
                             </div>
                         </div>
 
-                        <!-- Détails -->
-                        <details class="bg-gray-50 rounded-lg p-4">
+                        {{-- Détails produits --}}
+                        <details class="bg-gray-50 rounded-xl p-4">
                             <summary class="cursor-pointer text-sm text-blue-600 font-medium">
                                 Voir les détails de la commande
                             </summary>
+
                             <div class="mt-4 space-y-2">
                                 @foreach ($command->details as $detail)
                                     <div class="flex justify-between items-center text-sm text-gray-700">
@@ -106,18 +127,19 @@
                                             CFA</span>
                                     </div>
                                 @endforeach
-                                <div class="border-t pt-2 mt-2 text-sm font-semibold text-gray-800 flex justify-between">
-                                    <span>Total:</span>
+
+                                <div class="border-t pt-2 mt-2 flex justify-between font-semibold text-sm text-gray-800">
+                                    <span>Total :</span>
                                     <span>{{ number_format($command->total_price, 0, ',', ' ') }} F CFA</span>
                                 </div>
-                                <div class="text-sm text-gray-600">
-                                    Paiement: {{ ucfirst($command->payment_method) }}
-                                </div>
+
+                                <div class="text-sm text-gray-600">Mode de paiement :
+                                    {{ ucfirst($command->payment_method) }}</div>
+
                                 @if ($command->payment)
                                     <div class="text-sm text-green-700 mt-1">
                                         💰 Payée par {{ $command->payment->user->name }} –
-                                        Montant donné : {{ number_format($command->payment->amount_given, 0, ',', ' ') }} F
-                                        |
+                                        Donné : {{ number_format($command->payment->amount_given, 0, ',', ' ') }} F |
                                         Rendu : {{ number_format($command->payment->change_due, 0, ',', ' ') }} F
                                     </div>
                                 @endif
@@ -129,6 +151,7 @@
                         <p class="text-gray-500">Aucune commande trouvée.</p>
                     </div>
                 @endforelse
+
 
                 <div class="mt-6">
                     {{ $commands->withQueryString()->links() }}

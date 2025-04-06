@@ -15,7 +15,8 @@ class CommandesController extends Controller
     {
         // Récupère toutes les commandes de l'utilisateur connecté avec les détails
         $commands = auth()->user()->commands()
-                        ->with('details.product') // Charge les relations
+                        ->with('details.product')
+                        ->with('recuperation') 
                         ->orderBy('created_at', 'desc')
                         ->get();
 
@@ -59,7 +60,10 @@ class CommandesController extends Controller
             'unit_price' => $item['price'],
         ]);
     }
-   
+    // Enregistrer la récupération par défaut
+$command->recuperation()->create([
+    'recuperee' => false
+]);
 
 
     return redirect()->route('commandes.liste')->with('success', 'Commandes éffectué');
@@ -126,7 +130,7 @@ public function admin_index(Request $request)
     
     public function fetchLive()
 {
-    $commands = \App\Models\Command::with('details.product')
+    $commands = Command::with('details.product', 'recuperation')
         ->where('user_id', Auth::id())
         ->latest()
         ->get();
