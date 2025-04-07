@@ -99,8 +99,8 @@ protected function redirectByRole($user,  $studentInfos = null)
            return redirect()->intended('/accueil')->with('studentInfos', $studentInfos);
         default:
             Auth::logout();
-            return redirect('/login')->withErrors([
-                'name' => 'Rôle utilisateur inconnu.',
+            return redirect('/')->withErrors([
+                'name' => 'Une erreur sest produite.',
             ]);
     }
 }
