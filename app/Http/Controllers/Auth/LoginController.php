@@ -79,7 +79,7 @@ class LoginController extends Controller
             );
             $studentInfos = $apiResponse->json();
            
-        return $this->redirectByRole($localUser, $studentInfos);
+        return $this->redirectByRole($newUser, $studentInfos);
     }
 
     return back()->withErrors([
