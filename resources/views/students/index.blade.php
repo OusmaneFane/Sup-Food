@@ -49,7 +49,7 @@
         <div class="flex justify-between items-center mb-4">
             <button id="openMenu" class="text-xl">☰</button>
 
-            <img src="/images/logo.png" alt="logo" class="h-6" />
+            <img src="/images/logo.png" alt="logo" class="h-12" />
             <button id="openMenuProfile">
                 <!-- Photo de profil avec déclencheur du menu -->
                 <svg class="h-8 w-8 rounded-full border-2 border-orange-500 shadow-md object-cover cursor-pointer text-sky-600"

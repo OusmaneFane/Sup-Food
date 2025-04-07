@@ -25,7 +25,7 @@
         }
 
         body {
-            background: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background: url('/images/banniere2.JPG') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -69,11 +69,12 @@
         .logo {
             text-align: center;
             margin-bottom: 30px;
+
         }
 
         .logo img {
-            width: 80px;
-            height: 80px;
+            width: 312px;
+            height: 150px;
             object-fit: contain;
             margin-bottom: 15px;
             filter: drop-shadow(0 0 10px rgba(108, 92, 231, 0.7));
@@ -346,8 +347,8 @@
 
         <div class="logo">
             <img src="/images/logo.png" alt="Sup'Food Logo">
-            <h1>Sup'Food</h1>
-            <p>Gestion des commandes - Accès personnel</p>
+
+            <p>Moins D'attente - Plus de plaisir</p>
         </div>
 
         <form method="POST" action="/login">

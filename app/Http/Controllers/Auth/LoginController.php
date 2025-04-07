@@ -55,7 +55,7 @@ class LoginController extends Controller
             );
             //dd($apiResponse->ok());
         $apiUser = $apiResponse->json();
-         dd($apiUser);
+        // dd($apiUser);
         if (!$apiResponse->ok()) {
             return back()->withErrors([
                 'name' => 'Impossible de récupérer les informations de l’utilisateur distant.',
@@ -67,13 +67,19 @@ class LoginController extends Controller
        'name' => $apiUser['username'],
         'email' => $apiUser['email'] ?? $credentials['name'] . '@externe.com',
         'password' => bcrypt($credentials['password']),
-        'role' => $apiUser['role'] ?? 'etudiant'
+        'role' => 'etudiant'
     ]);
 
-    Auth::login($newUser);
-    $request->session()->regenerate();
+    
+         $token = $apiResponse->body();
+         $request->session()->put('PasseUser', $token);
 
-    return $this->redirectByRole($newUser);
+        $apiResponse = Http::withToken($token)->get(
+                'https://api-staging.supmanagement.ml/users/current'
+            );
+            $studentInfos = $apiResponse->json();
+           
+        return $this->redirectByRole($localUser, $studentInfos);
     }
 
     return back()->withErrors([
